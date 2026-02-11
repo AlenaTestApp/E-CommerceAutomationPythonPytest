@@ -1,0 +1,16 @@
+# created by virtualenv automatically
+#*
+# Virtual environment
+bin/
+lib/
+pyvenv.cfg
+.venv/
+venv/
+
+# PyCharm
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
