@@ -4,7 +4,8 @@ This repository contains **end-to-end web UI automation test cases** written in 
 
 The focus is on validating major e-commerce workflows such as navigation, search, and core user-facing functionality.
 
----
+## Test Plan
+See [Test Plan](TEST_PLAN.md)
 
 ## ✨ What’s covered
 
