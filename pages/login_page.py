@@ -9,16 +9,19 @@ from pages.home_page import HomePage
 
 class LoginPage(BasePage):
     def login(self, user_name, user_password):
+        # Enter valid email/password and click Login button
         self.click(LoginLocators.LOGIN_SIGNUP)
         self.type(LoginLocators.USERNAME, user_name)
         self.type(LoginLocators.PASSWORD, user_password)
         self.click(LoginLocators.LOGIN_BTN)
 
     def get_greeting_text(self):
+        # Retrieve Greeting test after successful Login
         login_confirmation = self.wait_visible(LoginLocators.LOGIN_CONFIRMATION)
         return login_confirmation.text
 
     def invalid_login_error(self):
+        # Retrieve Login error after invalid Login
         login_error = self.wait_visible(LoginLocators.LOGIN_ERROR)
         return login_error.text
 
