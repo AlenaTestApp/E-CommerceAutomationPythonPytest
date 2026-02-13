@@ -3,9 +3,8 @@ from pages.base_page import BasePage
 import time
 
 from locators.login_locators import LoginLocators
-from test_data.data import *
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from locators.home_locators import HomeLocators
+from pages.home_page import HomePage
 
 
 class LoginPage(BasePage):
@@ -18,5 +17,21 @@ class LoginPage(BasePage):
     def get_greeting_text(self):
         login_confirmation = self.wait_visible(LoginLocators.LOGIN_CONFIRMATION)
         return login_confirmation.text
+
+    def invalid_login_error(self):
+        login_error = self.wait_visible(LoginLocators.LOGIN_ERROR)
+        return login_error.text
+
+    def logout(self):
+        # function confirms that User is on Home page and clicks Logout btn
+        # after logout verifies user is redirected to Login page and Login button is visible
+        home_page = HomePage(self.driver)
+        home_page.confirm_home_page()
+        self.click(HomeLocators.LOGOUT)
+        assert "/login" in self.driver.current_url
+        assert self.wait_visible(LoginLocators.LOGIN_BTN).is_displayed()
+
+
+
 
 

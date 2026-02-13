@@ -9,3 +9,4 @@ class LoginLocators:
     PASSWORD = (By.XPATH, "//input[@name = 'password']")
     LOGIN_BTN = (By.XPATH, "//button[contains(text(), 'Login')]")
     LOGIN_CONFIRMATION = (By.XPATH, "//*[normalize-space(text())='Logged in as']")
+    LOGIN_ERROR = (By.XPATH, "//form[@action='/login']//p[contains(.,'incorrect')]")
