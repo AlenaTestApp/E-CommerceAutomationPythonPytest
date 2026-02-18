@@ -37,5 +37,9 @@ jobs:
           pip install pytest selenium
 
       - name: Run tests 
+        env:
+          USER_NAME: ${{ secrets.USER_NAME }}
+          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+          NAME: ${{ secrets.NAME }}
         run: |
           pytest -q
