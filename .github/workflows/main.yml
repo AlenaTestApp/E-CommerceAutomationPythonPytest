@@ -1,4 +1,4 @@
-name: CI (Continuous Integration) - Selenium (Selenium WebDriver) PyTest (Python Test)
+name: CI (Continuous Integration) - Selenium (Selenium WebDriver)
 
 on:
   pull_request:
@@ -11,15 +11,12 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
   tests:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout (получить код)
+      - name: Checkout 
         uses: actions/checkout@v4
 
       - name: Set up Python (Python)
@@ -33,14 +30,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      - name: Install dependencies (зависимости)
+      - name: Install dependencies 
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install pytest selenium webdriver-manager
+          pip install pytest selenium
 
-      - name: Run PyTest (Python Test)
-        env:
-          CI: "true"
+      - name: Run tests 
         run: |
           pytest -q
