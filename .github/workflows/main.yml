@@ -1,11 +1,20 @@
-name: CI (Continuous Integration) - Selenium (Selenium WebDriver)
+name: CI - Selenium
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
+    inputs:
+      suite:
+        description: "smoke or full"
+        required: true
+        default: "full"
+        type: choice
+        options:
+          - smoke
+          - full
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -16,30 +25,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python (Python)
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
 
-      - name: Install Google Chrome (Google Chrome)
+      - name: Install Google Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      - name: Install dependencies 
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest selenium
 
-      - name: Run tests 
+      - name: Run tests
         env:
           USER_NAME: ${{ secrets.USER_NAME }}
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
           NAME: ${{ secrets.NAME }}
         run: |
-          pytest -q
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ "${{ inputs.suite }}" = "smoke" ]; then
+              pytest -q -m smoke
+            else
+              pytest -q
+            fi
+          else
+            pytest -q -m smoke
+          fi
