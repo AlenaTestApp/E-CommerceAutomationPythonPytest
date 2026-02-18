@@ -1,7 +1,9 @@
 """Login Page Test suite"""
 from test_data.data import *
+import pytest
 
 
+@pytest.mark.smoke
 def test_login_valid_credentials(app):
     # Test Login with valid User's credentials
     app.login_page.login(USER_NAME, USER_PASSWORD)
